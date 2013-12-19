@@ -1,0 +1,11 @@
+{
+  "name": "webracks",
+  "version": "0.0.1",
+  "author": "Matthew Ellsworth <matt.ellsworth@asdqwex.net>",
+  "description": "webalized rackspace api using racksjs",
+  "dependencies" : {
+    "express"   :  "latest",
+    "util" :  "latest",
+    "ejs" : "latest"
+  }
+}

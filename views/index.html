@@ -1,0 +1,23 @@
+<html>
+<head>
+	<script src="views/angular.min.js"></script>
+	<script src="views/client.js"></script>
+	<style type="text/css" src="views/client.css"></style>
+</head>
+<body ng-app="client" ng-controller="MainCtrl">
+hello world
+<br><br><br><br>
+<div>
+	<form novalidate class="simple-form">
+		Username: <input type="text" ng-model="user.name" /><br />
+		API key: <input type="text" ng-model="user.apiKey" /><br />
+		<button ng-click="getAccount(user)">Submit</button>
+	</form>
+
+	<div ng-repeat="palette in paletteList">	
+	{{palette}}
+	</div>
+
+</div>
+</body>
+</html>
