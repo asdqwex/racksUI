@@ -1,0 +1,12 @@
+html {
+}
+
+.palette {
+	padding: 2px ;
+	text-align: left;
+	width: 25%;
+	font-family: monospace;
+	border: 1px solid black;
+	float: left;
+
+}

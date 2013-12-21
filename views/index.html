@@ -2,30 +2,36 @@
 <head>
 	<script src="views/angular.min.js"></script>
 	<script src="views/client.js"></script>
-	<style type="text/css" src="views/client.css"></style>
+	<link rel="stylesheet" href="views/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="views/client.css"></style>
 </head>
 <body ng-app="client" ng-controller="MainCtrl">
-hello world
-<br><br><br><br>
 <div>
-	<form novalidate class="simple-form">
-		Username: <input type="text" ng-model="user.name" /><br />
-		API key: <input type="text" ng-model="user.apiKey" /><br />
-		<button ng-click="getAccount(user)">Submit</button>
-	</form>
+<form role="form" ng-show="toggle">
+  <div class="form-group">
+    <label for="Username">Username</label>
+    <input ng-model="user.name" type="text" class="form-control" id="Username" placeholder="Enter Username">
+  </div>
+  <div class="form-group">
+    <label for="Password">Password</label>
+    <input ng-model="user.apiKey" type="password" class="form-control" id="Password" placeholder="Password">
+  </div>
+  <button ng-click="getAccount(user)" type="submit" class="btn btn-default">Submit</button>
+</form>
 <br><br>
-	<div ng-repeat="palette in palettes">	
-		Product: {{palette.name}}<br><br>
-		-- Features: <br>
-		<div ng-repeat="feature in palette.data.features">
-		---- {{feature}}
-		</div>
-		<br><br>
-		-- Devices: <br>
-		<div ng-repeat="device in palette.data.devices">
-		---- {{device.name}}
-		</div>
-		<br><br><br>
+	<div ng-repeat="(productName, product) in palettes" class="palette">	
+		{{productName}}
+		<ul>
+			<li ng-repeat="feature in product.productFeatures">{{feature}}</li>
+		</ul>
+		<ul>
+			<li ng-repeat="(resourceName, resource) in product.resources">
+				{{resourceName}}
+				<ul>
+					<li ng-repeat="feature in resource.resourceFeatures">{{feature}}</li>
+				</ul>
+			</li>
+		</ul>
 	</div>
 
 </div>

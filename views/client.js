@@ -5,19 +5,17 @@
   client = angular.module('client', []);
 
   client.controller('MainCtrl', function($scope, $http) {
-    $scope.palettes = [];
+    $scope.palettes = {};
+    $scope.user = {};
+    $scope.toggle = 1;
+    $scope.user.name = "xqweasdx";
+    $scope.user.apiKey = "73e313322c8f492cae6ff0f3efd897fe";
     return $scope.getAccount = function(user) {
       var _this = this;
+      $scope.toggle = 0;
       $http.post('/getAccount', user).success(function(resp) {
-        var palette, product, _results;
-        _results = [];
-        for (product in resp) {
-          palette = {};
-          palette.name = product;
-          palette.data = resp[product];
-          _results.push($scope.palettes.push(palette));
-        }
-        return _results;
+        $scope.palettes = resp;
+        return console.log(resp);
       });
       return console.log(user);
     };
