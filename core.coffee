@@ -50,14 +50,23 @@ webserver.post '/getAccount', (req, res) =>
 		for productName, product of rack.products
 			response[productName] = []
 			for resourceName, resource of rack.products[productName]
+				features = []
+				for feature of rack[productName][resourceName].model({})
+					features.push(feature)
+				productObject = {}
+				console.log features
+				productObject.features = features
+				productObject.devices = []
+				console.log 'productObject',  productObject
+				response[resource.meta.product] = productObject
 				counter++
 				rack.products[productName][resourceName].all (reply) =>
-					console.log reply
-					#counter--
-					#response[productName].push(reply)
-					#if counter == 0
-					#	console.log response
-					#	res.send response
+					for device in reply
+						productObject.devices.push(device)
+					counter--
+					if counter == 0
+						console.log 'response', response
+						res.send response
 
 
 

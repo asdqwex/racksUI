@@ -5,16 +5,17 @@
   client = angular.module('client', []);
 
   client.controller('MainCtrl', function($scope, $http) {
-    $scope.paletteList = [];
+    $scope.palettes = [];
     return $scope.getAccount = function(user) {
       var _this = this;
       $http.post('/getAccount', user).success(function(resp) {
-        var device, _i, _len, _results;
-        console.log(resp);
+        var palette, product, _results;
         _results = [];
-        for (_i = 0, _len = resp.length; _i < _len; _i++) {
-          device = resp[_i];
-          _results.push($scope.paletteList.push(device));
+        for (product in resp) {
+          palette = {};
+          palette.name = product;
+          palette.data = resp[product];
+          _results.push($scope.palettes.push(palette));
         }
         return _results;
       });

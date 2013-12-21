@@ -13,9 +13,19 @@ hello world
 		API key: <input type="text" ng-model="user.apiKey" /><br />
 		<button ng-click="getAccount(user)">Submit</button>
 	</form>
-
-	<div ng-repeat="palette in paletteList">	
-	{{palette}}
+<br><br>
+	<div ng-repeat="palette in palettes">	
+		Product: {{palette.name}}<br><br>
+		-- Features: <br>
+		<div ng-repeat="feature in palette.data.features">
+		---- {{feature}}
+		</div>
+		<br><br>
+		-- Devices: <br>
+		<div ng-repeat="device in palette.data.devices">
+		---- {{device.name}}
+		</div>
+		<br><br><br>
 	</div>
 
 </div>
