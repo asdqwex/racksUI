@@ -32,6 +32,9 @@
 						<li ng-repeat="feature in resource.resourceFeatures"> <button class="btn" ng-click="resourceClick(productName,resourceName, feature, {})">{{feature}}</button></li>
 					</ul>
 				</li>
+				<li ng-repeat="(modelName, model) in product.models">
+					<strong>{{model.name}}</strong>
+				</li>
 			</ul>
 		</div>
 	</div>
