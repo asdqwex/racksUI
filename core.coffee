@@ -5,6 +5,7 @@ util = require 'util'
 format = util.format    
 
 racksjs = require('./racks.js')
+rack = false
 
 #express config
 webserver.engine 'html', require('ejs').renderFile
@@ -24,7 +25,12 @@ webserver.get '/', (req, res) =>
 
 webserver.post '/getAccount', (req, res) =>
 	console.log req.body
-	new racksjs ({username: req.body.name, apiKey: req.body.apiKey, verbosity: 5}), (rack) =>
+	new racksjs ({username: req.body.name, apiKey: req.body.apiKey, verbosity: 5}), (newRack) =>
+		rack = newRack
+		if rack.error
+			console.log rack.error
+			res.send rack.error
+			return false
 		console.log 'rackspace auth successful'
 		response = {}
 		counter = 0
@@ -44,12 +50,28 @@ webserver.post '/getAccount', (req, res) =>
 						modelFeatures = []
 					else
 						modelFeatures = Object.keys(rack[productName][resourceName].model({}))
+
+					resourceFeatures = Object.keys(rack[productName][resourceName])
+					resourceFeatures.splice(resourceFeatures.indexOf('meta'), 1) if resourceFeatures.indexOf('meta') > -1
+					resourceFeatures.splice(resourceFeatures.indexOf('model'), 1) if resourceFeatures.indexOf('model') > -1
+
 					products[productName].resources[resourceName] = 
 						modelFeatures: modelFeatures
-						resourceFeatures: Object.keys(rack[productName][resourceName])
+						resourceFeatures: resourceFeatures
 						models: []
 		console.log 'sending:', products
 		res.send(products)
+webserver.post '/:productName/:resourceName/:feature', (req, res) =>
+	if rack
+		if typeof rack[req.params.productName][req.params.resourceName][req.params.feature] == 'function'
+			rack[req.params.productName][req.params.resourceName][req.params.feature] (reply) ->
+				console.log reply
+				res.send reply
+	else
+		console.log 'please auth'
+
+	console.log req.body
+	console.log req.args, req.params
 
 # Start Server
 webserver.listen(3000)

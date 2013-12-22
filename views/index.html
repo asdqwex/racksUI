@@ -19,19 +19,21 @@
   <button ng-click="getAccount(user)" type="submit" class="btn btn-default">Submit</button>
 </form>
 <br><br>
-	<div ng-repeat="(productName, product) in palettes" class="palette">	
-		{{productName}}
-		<ul>
-			<li ng-repeat="feature in product.productFeatures">{{feature}}</li>
-		</ul>
-		<ul>
-			<li ng-repeat="(resourceName, resource) in product.resources">
-				{{resourceName}}
-				<ul>
-					<li ng-repeat="feature in resource.resourceFeatures">{{feature}}</li>
-				</ul>
-			</li>
-		</ul>
+	<div class="gridmode">
+		<div ng-repeat="(productName, product) in palettes" class="palette highlight">	
+			<h4>{{productName}}</h4>
+			<ul>
+				<li ng-repeat="feature in product.productFeatures"><h5>{{feature}}</h5></li>
+			</ul>
+			<ul>
+				<li ng-repeat="(resourceName, resource) in product.resources">
+					<strong>{{resourceName}}</strong>
+					<ul>
+						<li ng-repeat="feature in resource.resourceFeatures"> <button class="btn" ng-click="resourceClick(productName,resourceName, feature, {})">{{feature}}</button></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
 	</div>
 
 </div>

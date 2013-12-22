@@ -10,7 +10,7 @@
     $scope.toggle = 1;
     $scope.user.name = "xqweasdx";
     $scope.user.apiKey = "73e313322c8f492cae6ff0f3efd897fe";
-    return $scope.getAccount = function(user) {
+    $scope.getAccount = function(user) {
       var _this = this;
       $scope.toggle = 0;
       $http.post('/getAccount', user).success(function(resp) {
@@ -18,6 +18,12 @@
         return console.log(resp);
       });
       return console.log(user);
+    };
+    return $scope.resourceClick = function(productName, resourceName, feature, data) {
+      var _this = this;
+      return $http.post('/' + productName + '/' + resourceName + '/' + feature, data).success(function(resp) {
+        return console.log(resp);
+      });
     };
   });
 
