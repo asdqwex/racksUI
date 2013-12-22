@@ -8,8 +8,8 @@
     $scope.palettes = {};
     $scope.user = {};
     $scope.toggle = 1;
-    $scope.user.name = "xqweasdx";
-    $scope.user.apiKey = "76381a8f3b714a02be3b944a21f435d4";
+    $scope.user.name = "";
+    $scope.user.apiKey = "";
     $scope.getAccount = function(user) {
       var _this = this;
       $scope.toggle = 0;
