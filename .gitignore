@@ -1,2 +1,4 @@
 node_modules/
 racks.js
+views/angular.min.js
+views/bootstrap.min.css
