@@ -5,15 +5,14 @@ client.controller 'MainCtrl', ($scope, $http) ->
 	$scope.user = {}
 	$scope.tmpToggle = 0
 	$scope.toggle = 1
-	$scope.user.name = ""
-	$scope.user.apiKey = ""
-	$scope.inputlessFeatures = ['all']
 	$scope.getAccount = (user) ->
 		$scope.toggle = !$scope.toggle
 		$http.post('/getAccount', user).success (resp) =>
 			$scope.palettes = resp
-			console.log resp 
-		console.log user
+	# FOR DEV MODE ONLY
+	$scope.getAccount({ username: 'dummy', apiKey: 'dummy' });
+
+	$scope.inputlessFeatures = ['all']
 	$scope.resourceClick = (productName,resourceName, feature, data) ->
 		if feature in $scope.inputlessFeatures
 			console.log 'feature input filtered', feature

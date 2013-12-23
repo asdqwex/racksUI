@@ -11,18 +11,18 @@
     $scope.user = {};
     $scope.tmpToggle = 0;
     $scope.toggle = 1;
-    $scope.user.name = "xqweasdx";
-    $scope.user.apiKey = "76381a8f3b714a02be3b944a21f435d4";
-    $scope.inputlessFeatures = ['all'];
     $scope.getAccount = function(user) {
       var _this = this;
       $scope.toggle = !$scope.toggle;
-      $http.post('/getAccount', user).success(function(resp) {
-        $scope.palettes = resp;
-        return console.log(resp);
+      return $http.post('/getAccount', user).success(function(resp) {
+        return $scope.palettes = resp;
       });
-      return console.log(user);
     };
+    $scope.getAccount({
+      username: 'dummy',
+      apiKey: 'dummy'
+    });
+    $scope.inputlessFeatures = ['all'];
     $scope.resourceClick = function(productName, resourceName, feature, data) {
       var _this = this;
       if (__indexOf.call($scope.inputlessFeatures, feature) >= 0) {

@@ -10,9 +10,23 @@ rack = false
 #express config
 webserver.engine 'html', require('ejs').renderFile
 webserver.use(express.bodyParser());
-
 #set public docroot
 webserver.use "/views", express.static(__dirname + '/views')
+
+# Auth with Rackspace API
+rackAuth = (cb) ->
+	if rack
+		cb() 
+	else
+		# for dev mode, use auth passed in from args -> THIS MEANS ANYONE USING THE SITE WILL USE THIS API KEY -> SO DEV MODE ONLY
+		new racksjs {username: process.argv[2], apiKey: process.argv[3], verbosity: 0, cache: true}, (newRack) =>
+		# This is to use the string passed in from the /getAccount route - ie: production mode
+		# new racksjs {username: req.body.name, apiKey: req.body.apiKey, verbosity: 0, cache: true}, (newRack) =>
+			if rack.error
+				console.log rack.error
+				return res.send rack.error
+			rack = newRack;
+			cb()
 
 webserver.get '/', (req, res) =>
 	res.render 'index.html', (err, html) =>
@@ -25,12 +39,7 @@ webserver.get '/', (req, res) =>
 
 webserver.post '/getAccount', (req, res) =>
 	console.log req.body
-	new racksjs ({username: req.body.name, apiKey: req.body.apiKey, verbosity: 0}), (newRack) =>
-		rack = newRack
-		if rack.error
-			console.log rack.error
-			res.send rack.error
-			return false
+	rackAuth () =>
 		console.log 'rackspace auth successful'
 		response = {}
 		counter = 0
