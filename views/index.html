@@ -26,8 +26,8 @@
 			</ul>
 			<div ng-repeat="(resourceName, resource) in product.resources">
 				<strong>{{resourceName}}</strong>
-				<div class="feature"  ng-repeat="(featureName, feature) in resource.resourceFeatures"> <button class="btn" ng-click="resourceClick(productName,resourceName, featureName, {})">{{featureName}}</button>
-				<input ng-show="feature.show" type="text">
+				<div class="feature"  ng-repeat="(featureName, feature) in resource.resourceFeatures"> <button class="btn" ng-click="resourceClick(productName,resourceName,featureName, {})">{{featureName}}</button>
+				<input ng-show="feature.show" type="text"><button ng-show="feature.show" ng-click="resourceSubmit()" type="submit" class="btn btn-default">Submit</button>
 				</div>
 			</div>
 			<div ng-repeat="(modelName, model) in product.models">
