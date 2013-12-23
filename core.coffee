@@ -38,7 +38,6 @@ webserver.get '/', (req, res) =>
 			res.send html
 
 webserver.post '/getAccount', (req, res) =>
-	console.log req.body
 	rackAuth () =>
 		console.log 'rackspace auth successful'
 		response = {}
@@ -80,16 +79,14 @@ webserver.post '/getAccount', (req, res) =>
 						modelFeatures: modelFeatures
 						resourceFeatures: resourceFeatures
 						models: []
-		console.log 'sending:', products
 		res.send(products)
 webserver.post '/:productName/:resourceName/:feature', (req, res) =>
-	console.log 'FEATURE REQUEST!', req.params
 	if rack
 		if typeof rack[req.params.productName][req.params.resourceName][req.params.feature] == 'function'
 			rack[req.params.productName][req.params.resourceName][req.params.feature] (reply) ->
 				res.send reply
 		else
-			console.log('backend', req.params)
+			console.log('REQUESTED FEATURE WAS NOT A FUNCTION:', req.params)
 			res.send []
 	else
 		console.log 'please auth'

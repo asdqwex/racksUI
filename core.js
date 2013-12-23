@@ -56,7 +56,6 @@
   });
 
   webserver.post('/getAccount', function(req, res) {
-    console.log(req.body);
     return rackAuth(function() {
       var counter, feature, featureName, featureObject, filteredResourceFeatures, modelFeatures, product, productName, products, resource, resourceFeatures, resourceName, response, _ref, _ref1, _ref2;
       console.log('rackspace auth successful');
@@ -110,20 +109,18 @@
           }
         }
       }
-      console.log('sending:', products);
       return res.send(products);
     });
   });
 
   webserver.post('/:productName/:resourceName/:feature', function(req, res) {
-    console.log('FEATURE REQUEST!', req.params);
     if (rack) {
       if (typeof rack[req.params.productName][req.params.resourceName][req.params.feature] === 'function') {
         return rack[req.params.productName][req.params.resourceName][req.params.feature](function(reply) {
           return res.send(reply);
         });
       } else {
-        console.log('backend', req.params);
+        console.log('REQUESTED FEATURE WAS NOT A FUNCTION:', req.params);
         return res.send([]);
       }
     } else {

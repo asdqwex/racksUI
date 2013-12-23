@@ -46,6 +46,7 @@ div.resourceName {
 	top: 2px;
 	font-size: 16px;
 	float: left;
+	text-transform: capitalize;
 }
 .resourceFeatures {
 	float: right;
@@ -58,6 +59,7 @@ h3.productName {
 	font-size: 16px;
 	float: right;
 	width: 100%;
+	text-transform: capitalize;
 }
 div.productResources {
 	float: left;
