@@ -26,11 +26,14 @@
 			</ul>
 			<div ng-repeat="(resourceName, resource) in product.resources">
 				<strong>{{resourceName}}</strong>
-					<div class="feature"  ng-repeat="feature in resource.resourceFeatures"> <button class="btn" ng-click="resourceClick(productName,resourceName, feature, {})">{{feature}}</button></div>
+				<div class="feature"  ng-repeat="(featureName, feature) in resource.resourceFeatures"> <button class="btn" ng-click="resourceClick(productName,resourceName, featureName, {})">{{featureName}}</button>
+				<input ng-show="feature.show" type="text">
+				</div>
 			</div>
-			<li ng-repeat="(modelName, model) in product.models">
+			<div ng-repeat="(modelName, model) in product.models">
 				<strong>{{model.name}}</strong>
-			</li>
+				<div ng-show="model.show">{{model.details}}</div>
+			</div>
 		</div>
 	</div>
 

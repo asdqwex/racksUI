@@ -8,8 +8,8 @@
     $scope.palettes = {};
     $scope.user = {};
     $scope.toggle = 1;
-    $scope.user.name = "";
-    $scope.user.apiKey = "";
+    $scope.user.name = "xqweasdx";
+    $scope.user.apiKey = "76381a8f3b714a02be3b944a21f435d4";
     $scope.getAccount = function(user) {
       var _this = this;
       $scope.toggle = 0;
@@ -20,11 +20,7 @@
       return console.log(user);
     };
     return $scope.resourceClick = function(productName, resourceName, feature, data) {
-      var _this = this;
-      return $http.post('/' + productName + '/' + resourceName + '/' + feature, data).success(function(resp) {
-        $scope.palettes[productName].models = resp;
-        return console.log(resp);
-      });
+      return $scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show = !$scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show;
     };
   });
 

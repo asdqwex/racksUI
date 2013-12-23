@@ -25,7 +25,7 @@ webserver.get '/', (req, res) =>
 
 webserver.post '/getAccount', (req, res) =>
 	console.log req.body
-	new racksjs ({username: req.body.name, apiKey: req.body.apiKey, verbosity: 5}), (newRack) =>
+	new racksjs ({username: req.body.name, apiKey: req.body.apiKey, verbosity: 0}), (newRack) =>
 		rack = newRack
 		if rack.error
 			console.log rack.error
@@ -36,7 +36,7 @@ webserver.post '/getAccount', (req, res) =>
 		counter = 0
 		products = {}
 		for productName, product of rack.products
-		#	#console.log "productName", productName, "product", product
+			#console.log "productName", productName, "product", product
 			products[productName] = {
 				productFeatures: []
 				resources: {}
@@ -50,11 +50,19 @@ webserver.post '/getAccount', (req, res) =>
 						modelFeatures = []
 					else
 						modelFeatures = Object.keys(rack[productName][resourceName].model({}))
-
-					resourceFeatures = Object.keys(rack[productName][resourceName])
-					resourceFeatures.splice(resourceFeatures.indexOf('meta'), 1) if resourceFeatures.indexOf('meta') > -1
-					resourceFeatures.splice(resourceFeatures.indexOf('model'), 1) if resourceFeatures.indexOf('model') > -1
-					resourceFeatures.splice(resourceFeatures.indexOf('assume'), 1) if resourceFeatures.indexOf('assume') > -1
+					resourceFeatures = {}
+					for featureName, feature of rack[productName][resourceName]
+						featureObject = {}
+						featureObject = {
+							show: 0
+							details: feature
+						}
+						resourceFeatures[featureName] = featureObject
+					console.log resourceFeatures
+					# Filter out unbuttomizable features manually .... QQ
+					#resourceFeatures.splice(resourceFeatures.indexOf('meta'), 1) if resourceFeatures.indexOf('meta') > -1
+					#resourceFeatures.splice(resourceFeatures.indexOf('model'), 1) if resourceFeatures.indexOf('model') > -1
+					#resourceFeatures.splice(resourceFeatures.indexOf('assume'), 1) if resourceFeatures.indexOf('assume') > -1
 
 
 					products[productName].resources[resourceName] = 
