@@ -26,11 +26,11 @@
     $scope.resourceClick = function(productName, resourceName, feature, data) {
       var _this = this;
       if (__indexOf.call($scope.inputlessFeatures, feature) >= 0) {
-        console.log('feature input filtered', feature);
         return $http.post('/' + productName + '/' + resourceName + '/' + feature, data).success(function(resp) {
-          return $scope.palettes[productName].models = resp;
+          return $scope.palettes[productName].resources[resourceName].models = resp;
         });
       } else {
+        console.log('feature:', feature);
         $scope.tmpToggle = !$scope.tmpToggle;
         return $scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show = !$scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show;
       }

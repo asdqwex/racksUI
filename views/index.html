@@ -19,21 +19,20 @@
 				<button ng-click="getAccount(user)" type="submit" class="btn btn-default">Submit</button>
 			</form>
 			<div class="gridmode">
-				<div ng-repeat="(productName, product) in palettes" class="palette highlight" style="background-image: url('/views/assets/{{ productName }}.png');">	
-					<h4>{{productName}}</h4>
+				<div ng-repeat="(productName, product) in palettes" class="palette highlight {{ productName }}" style="background-image: url('/views/assets/{{ productName }}.png');">
+					<h3 class="productName">{{productName}}</h3>
 					<ul>
 						<li ng-repeat="feature in product.productFeatures"><h5>{{feature}}</h5></li>
 					</ul>
-					<div ng-repeat="(resourceName, resource) in product.resources">
-						<strong>{{resourceName}}</strong><br>
-						<span  class="feature"  ng-repeat="(featureName, feature) in resource.resourceFeatures"> 
-							<button class="btn btn-default btn-xs" ng-click="resourceClick(productName,resourceName,featureName, {})">{{featureName}}</button>
-						</span>
-					</div>
-					<h4>Instances</h4>
-					<div ng-repeat="(modelName, model) in product.models">
-						<strong ng-click="getModelDetails(model)">{{model.name}}</strong>
-						<div>{{model.details}}</div>
+					<div class="resource" ng-repeat="(resourceName, resource) in product.resources">
+						<h4 class="resourceName">{{resourceName}}:</h4>
+						<div class="btn-group resourceFeatures">
+							<button ng-repeat="(featureName, feature) in resource.resourceFeatures" class="btn btn-default btn-xs" ng-click="resourceClick(productName,resourceName,featureName, {})">{{featureName}}</button>
+						</div>
+						<div ng-repeat="model in resource.models">
+							<strong ng-click="getModelDetails(model)">{{model.name || model.id}}</strong>
+							<div>{{model.details}}</div>
+						</div>
 					</div>
 				</div>
 			</div>

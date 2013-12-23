@@ -15,7 +15,6 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 }
-
 .palette {
 	background-color: #B8B8B8;
     border: 1px solid #E1E1E8;
@@ -28,15 +27,35 @@ body {
 	background-repeat: no-repeat;
 	background-position: 6% -20px;
 }
-.palette h4 {
+.palette h3 {
 	text-align: right;
 	margin-bottom: 40px;
+	text-transform: capitalize;
 }
-
-.feature {
-	padding: 7px;
+h4 {
+	text-transform: capitalize;
+	display: inline-block;
 }
-
+div.resource {
+	min-height: 25px;
+}
+h4.resourceName {
+	padding: 0px;
+	margin: 0px;
+	position: relative;
+	top: 2px;
+	font-size: 16px;
+}
+.resourceFeatures {
+	float: right;
+}
+h3.productName {
+	position: relative;
+	top: -17px;
+	left: 3px;
+	color: #777;
+	font-size: 16px;
+}
 ul {
 	list-style: none;
 }
@@ -45,7 +64,6 @@ li {
 	margin-bottom: 7px;
 	margin-top: 7px;
 }
-
 .newServerFormContainer {
 	background-color: rgba(0,0,0,0.5);
 	position: absolute;
@@ -56,9 +74,10 @@ li {
 	width: 100%;
 	height: 100%;
 }
-
 .newServerForm {
 	margin: 0 auto;
 	margin-top: 15%;
 }
-
+.cloudImages, .cloudOrchestration, .cloudFilesCDN {
+	display: none;
+}

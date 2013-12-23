@@ -30,7 +30,7 @@
       return new racksjs({
         username: process.argv[2],
         apiKey: process.argv[3],
-        verbosity: 0,
+        verbosity: 5,
         cache: true
       }, function(newRack) {
         if (rack.error) {
@@ -88,7 +88,7 @@
             for (featureName in _ref2) {
               feature = _ref2[featureName];
               if (__indexOf.call(filteredResourceFeatures, featureName) >= 0) {
-                console.log('feature filtered:', featureName);
+
               } else {
                 featureObject = {};
                 featureObject = {
@@ -98,7 +98,6 @@
                 resourceFeatures[featureName] = featureObject;
               }
             }
-            console.log(resourceFeatures);
             products[productName].resources[resourceName] = {
               modelFeatures: modelFeatures,
               resourceFeatures: resourceFeatures,
@@ -113,18 +112,20 @@
   });
 
   webserver.post('/:productName/:resourceName/:feature', function(req, res) {
+    console.log('FEATURE REQUEST!', req.params);
     if (rack) {
       if (typeof rack[req.params.productName][req.params.resourceName][req.params.feature] === 'function') {
-        rack[req.params.productName][req.params.resourceName][req.params.feature](function(reply) {
-          console.log(reply);
+        return rack[req.params.productName][req.params.resourceName][req.params.feature](function(reply) {
           return res.send(reply);
         });
+      } else {
+        console.log('backend', req.params);
+        return res.send([]);
       }
     } else {
       console.log('please auth');
+      return res.send([]);
     }
-    console.log(req.body);
-    return console.log(req.args, req.params);
   });
 
   webserver.listen(3000);

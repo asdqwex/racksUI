@@ -19,7 +19,7 @@ rackAuth = (cb) ->
 		cb() 
 	else
 		# for dev mode, use auth passed in from args -> THIS MEANS ANYONE USING THE SITE WILL USE THIS API KEY -> SO DEV MODE ONLY
-		new racksjs {username: process.argv[2], apiKey: process.argv[3], verbosity: 0, cache: true}, (newRack) =>
+		new racksjs {username: process.argv[2], apiKey: process.argv[3], verbosity: 5, cache: true}, (newRack) =>
 		# This is to use the string passed in from the /getAccount route - ie: production mode
 		# new racksjs {username: req.body.name, apiKey: req.body.apiKey, verbosity: 0, cache: true}, (newRack) =>
 			if rack.error
@@ -63,7 +63,7 @@ webserver.post '/getAccount', (req, res) =>
 					filteredResourceFeatures = ['assume', 'meta', 'model']
 					for featureName, feature of rack[productName][resourceName]
 						if featureName in filteredResourceFeatures
-							console.log 'feature filtered:', featureName
+							#console.log 'feature filtered:', featureName
 						else
 							featureObject = {}
 							featureObject = {
@@ -71,7 +71,7 @@ webserver.post '/getAccount', (req, res) =>
 								details: feature
 							}
 							resourceFeatures[featureName] = featureObject
-					console.log resourceFeatures
+					#console.log resourceFeatures
 					products[productName].resources[resourceName] = 
 						modelFeatures: modelFeatures
 						resourceFeatures: resourceFeatures
@@ -79,16 +79,17 @@ webserver.post '/getAccount', (req, res) =>
 		console.log 'sending:', products
 		res.send(products)
 webserver.post '/:productName/:resourceName/:feature', (req, res) =>
+	console.log 'FEATURE REQUEST!', req.params
 	if rack
 		if typeof rack[req.params.productName][req.params.resourceName][req.params.feature] == 'function'
 			rack[req.params.productName][req.params.resourceName][req.params.feature] (reply) ->
-				console.log reply
 				res.send reply
+		else
+			console.log('backend', req.params)
+			res.send []
 	else
 		console.log 'please auth'
-
-	console.log req.body
-	console.log req.args, req.params
+		res.send []
 
 # Start Server
 webserver.listen(3000)
