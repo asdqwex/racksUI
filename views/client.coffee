@@ -5,8 +5,8 @@ client.controller 'MainCtrl', ($scope, $http) ->
 	$scope.user = {}
 	$scope.tmpToggle = 0
 	$scope.toggle = 1
-	$scope.user.name = "xqweasdx"
-	$scope.user.apiKey = "76381a8f3b714a02be3b944a21f435d4"
+	$scope.user.name = ""
+	$scope.user.apiKey = ""
 	$scope.inputlessFeatures = ['all']
 	$scope.getAccount = (user) ->
 		$scope.toggle = !$scope.toggle
