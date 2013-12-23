@@ -7,7 +7,7 @@
 </head>
 <body ng-app="client" ng-controller="MainCtrl">
 <div>
-<form role="form" ng-show="toggle">
+<form class="racksAuthform" role="form" ng-show="toggle">
   <div class="form-group">
     <label for="Username">Username</label>
     <input ng-model="user.name" type="text" class="form-control" id="Username" placeholder="Enter Username">
@@ -18,24 +18,19 @@
   </div>
   <button ng-click="getAccount(user)" type="submit" class="btn btn-default">Submit</button>
 </form>
-<br><br>
 	<div class="gridmode">
 		<div ng-repeat="(productName, product) in palettes" class="palette highlight">	
 			<h4>{{productName}}</h4>
 			<ul>
 				<li ng-repeat="feature in product.productFeatures"><h5>{{feature}}</h5></li>
 			</ul>
-			<ul>
-				<li ng-repeat="(resourceName, resource) in product.resources">
-					<strong>{{resourceName}}</strong>
-					<ul>
-						<li ng-repeat="feature in resource.resourceFeatures"> <button class="btn" ng-click="resourceClick(productName,resourceName, feature, {})">{{feature}}</button></li>
-					</ul>
-				</li>
-				<li ng-repeat="(modelName, model) in product.models">
-					<strong>{{model.name}}</strong>
-				</li>
-			</ul>
+			<div ng-repeat="(resourceName, resource) in product.resources">
+				<strong>{{resourceName}}</strong>
+					<div class="feature"  ng-repeat="feature in resource.resourceFeatures"> <button class="btn" ng-click="resourceClick(productName,resourceName, feature, {})">{{feature}}</button></div>
+			</div>
+			<li ng-repeat="(modelName, model) in product.models">
+				<strong>{{model.name}}</strong>
+			</li>
 		</div>
 	</div>
 

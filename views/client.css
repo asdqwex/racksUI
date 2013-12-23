@@ -1,4 +1,6 @@
-html {
+body {
+	margin: 25px;
+	background-color: #505050;
 }
 
 .gridmode {
@@ -7,16 +9,26 @@ html {
 	-moz-column-count: 4;
 }
 
+.racksAuthform {
+	width: 25%;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .palette {
-	background-color: #F7F7F9;
+	background-color: #B8B8B8;
     border: 1px solid #E1E1E8;
     border-radius: 4px;
-    margin-bottom: 14px;
     padding: 9px 14px;
 	text-align: left;
 	width: 100%;
 	display: inline-block;
 	margin-bottom: 10px;
+}
+
+.feature {
+	padding: 7px;
 }
 
 ul {
