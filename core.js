@@ -68,7 +68,11 @@
         product = _ref[productName];
         products[productName] = {
           productFeatures: [],
-          resources: {}
+          resources: {},
+          meta: {
+            target: rack[productName].meta.target(),
+            endpoints: rack[productName].meta.endpoints
+          }
         };
         _ref1 = rack.products[productName];
         for (resourceName in _ref1) {

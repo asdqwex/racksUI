@@ -20,18 +20,25 @@
 			</form>
 			<div class="gridmode">
 				<div ng-repeat="(productName, product) in palettes" class="palette highlight {{ productName }}" style="background-image: url('/views/assets/{{ productName }}.png');">
-					<h3 class="productName">{{productName}}</h3>
-					<ul>
-						<li ng-repeat="feature in product.productFeatures"><h5>{{feature}}</h5></li>
-					</ul>
-					<div class="resource" ng-repeat="(resourceName, resource) in product.resources">
-						<h4 class="resourceName">{{resourceName}}:</h4>
-						<div class="btn-group resourceFeatures">
-							<button ng-repeat="(featureName, feature) in resource.resourceFeatures" class="btn btn-default btn-xs" ng-click="resourceClick(productName,resourceName,featureName, {})">{{featureName}}</button>
-						</div>
-						<div ng-repeat="model in resource.models">
-							<strong ng-click="getModelDetails(model)">{{model.name || model.id}}</strong>
-							<div>{{model.details}}</div>
+					<div class="paletteHeader">
+						<h3 class="productName">{{productName}}</h3>
+						<div class="productDetails">{{ product.meta.target.replace('https://', '').split('/')[0] }}</div>
+					</div>
+					<div class="btn-group productFeatures">
+						<button ng-repeat="feature in product.productFeatures" class="btn btn-default btn-xs" ng-click="productFeatureClick(productName, feature, {})">{{feature}}</button>
+					</div>
+					<div class="productResources">
+						<div class="resource" ng-repeat="(resourceName, resource) in product.resources">
+							<div class="resourceHeader">
+								<div class="resourceName">{{resourceName}}:</div>
+								<div class="btn-group resourceFeatures">
+									<button ng-repeat="(featureName, feature) in resource.resourceFeatures" class="btn btn-default btn-xs" ng-click="resourceClick(productName,resourceName, featureName, {})">{{featureName}}</button>
+								</div>
+							</div>
+							<div ng-repeat="model in resource.models">
+								<strong ng-click="getModelDetails(model)">{{model.name || model.id}}</strong>
+								<div>{{model.details}}</div>
+							</div>
 						</div>
 					</div>
 				</div>

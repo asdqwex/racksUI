@@ -49,6 +49,10 @@ webserver.post '/getAccount', (req, res) =>
 			products[productName] = {
 				productFeatures: []
 				resources: {}
+				meta: {
+					target: rack[productName].meta.target(),
+					endpoints: rack[productName].meta.endpoints
+				}
 			}
 			for resourceName, resource of rack.products[productName]
 				counter++
