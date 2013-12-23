@@ -1,51 +1,49 @@
 <html>
-<head>
-	<script src="views/angular.min.js"></script>
-	<script src="views/client.js"></script>
-	<link rel="stylesheet" href="views/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="views/client.css"></style>
-</head>
-<body ng-app="client" ng-controller="MainCtrl">
-<div>
-<form class="racksAuthform" role="form" ng-show="toggle">
-  <div class="form-group">
-    <label for="Username">Username</label>
-    <input ng-model="user.name" type="text" class="form-control" id="Username" placeholder="Enter Username">
-  </div>
-  <div class="form-group">
-    <label for="Password">Password</label>
-    <input ng-model="user.apiKey" type="password" class="form-control" id="Password" placeholder="Password">
-  </div>
-  <button ng-click="getAccount(user)" type="submit" class="btn btn-default">Submit</button>
-</form>
-	<div class="gridmode">
-		<div ng-repeat="(productName, product) in palettes" class="palette highlight">	
-			<h4>{{productName}}</h4>
-			<ul>
-				<li ng-repeat="feature in product.productFeatures"><h5>{{feature}}</h5></li>
-			</ul>
-			<div ng-repeat="(resourceName, resource) in product.resources">
-				<strong>{{resourceName}}</strong><br>
-				<span  class="feature"  ng-repeat="(featureName, feature) in resource.resourceFeatures"> 
-					<button class="btn" ng-click="resourceClick(productName,resourceName,featureName, {})">{{featureName}}</button>
-				</span>
+	<head>
+		<script src="views/angular.min.js"></script>
+		<script src="views/client.js"></script>
+		<link rel="stylesheet" href="views/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="views/client.css"></style>
+	</head>
+	<body ng-app="client" ng-controller="MainCtrl">
+		<div>
+			<form class="racksAuthform" role="form" ng-show="toggle">
+				<div class="form-group">
+					<label for="Username">Username</label>
+					<input ng-model="user.name" type="text" class="form-control" id="Username" placeholder="Enter Username">
+				</div>
+				<div class="form-group">
+					<label for="Password">Password</label>
+					<input ng-model="user.apiKey" type="password" class="form-control" id="Password" placeholder="Password">
+				</div>
+				<button ng-click="getAccount(user)" type="submit" class="btn btn-default">Submit</button>
+			</form>
+			<div class="gridmode">
+				<div ng-repeat="(productName, product) in palettes" class="palette highlight" style="background-image: url('/views/assets/{{ productName }}.png');">	
+					<h4>{{productName}}</h4>
+					<ul>
+						<li ng-repeat="feature in product.productFeatures"><h5>{{feature}}</h5></li>
+					</ul>
+					<div ng-repeat="(resourceName, resource) in product.resources">
+						<strong>{{resourceName}}</strong><br>
+						<span  class="feature"  ng-repeat="(featureName, feature) in resource.resourceFeatures"> 
+							<button class="btn btn-default btn-xs" ng-click="resourceClick(productName,resourceName,featureName, {})">{{featureName}}</button>
+						</span>
+					</div>
+					<h4>Instances</h4>
+					<div ng-repeat="(modelName, model) in product.models">
+						<strong ng-click="getModelDetails(model)">{{model.name}}</strong>
+						<div>{{model.details}}</div>
+					</div>
+				</div>
 			</div>
-			<h4> Instances </h4>
-			<div ng-repeat="(modelName, model) in product.models">
-				<strong ng-click="getModelDetails(model)">{{model.name}}</strong>
-				<div>{{model.details}}</div>
+			<div class="newServerFormContainer" ng-show="tmpToggle">	
+				<div class="newServerForm">
+					<input type="text"><br>
+					<input type="text"><br>
+					<button calss="btn">Submit</button>
+				</div>
 			</div>
 		</div>
-	</div>
-<div class="newServerFormContainer" ng-show="tmpToggle">	
-	<div class="newServerForm">
-		<input type="text"><br>
-		<input type="text"><br>
-		<button calss="btn">Submit</button>
-	</div>
-</div>
-
-
-</div>
-</body>
+	</body>
 </html>
