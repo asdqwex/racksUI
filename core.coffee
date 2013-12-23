@@ -63,12 +63,6 @@ webserver.post '/getAccount', (req, res) =>
 							}
 							resourceFeatures[featureName] = featureObject
 					console.log resourceFeatures
-					# Filter out unbuttomizable features manually .... QQ
-					#resourceFeatures.splice(resourceFeatures.indexOf('meta'), 1) if resourceFeatures.indexOf('meta') > -1
-					#resourceFeatures.splice(resourceFeatures.indexOf('model'), 1) if resourceFeatures.indexOf('model') > -1
-					#resourceFeatures.splice(resourceFeatures.indexOf('assume'), 1) if resourceFeatures.indexOf('assume') > -1
-
-
 					products[productName].resources[resourceName] = 
 						modelFeatures: modelFeatures
 						resourceFeatures: resourceFeatures
