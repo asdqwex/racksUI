@@ -39,3 +39,20 @@ li {
 	margin-bottom: 7px;
 	margin-top: 7px;
 }
+
+.newServerFormContainer {
+	background-color: rgba(0,0,0,0.5);
+	position: absolute;
+	top: 0;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	height: 100%;
+}
+
+.newServerForm {
+	margin: 0 auto;
+	margin-top: 15%;
+}
+

@@ -9,10 +9,11 @@
     var _this = this;
     $scope.palettes = {};
     $scope.user = {};
+    $scope.tmpToggle = 0;
     $scope.toggle = 1;
-    $scope.user.name = "";
-    $scope.user.apiKey = "";
-    $scope.inpulessFeatures = ['all'];
+    $scope.user.name = "xqweasdx";
+    $scope.user.apiKey = "76381a8f3b714a02be3b944a21f435d4";
+    $scope.inputlessFeatures = ['all'];
     $scope.getAccount = function(user) {
       var _this = this;
       $scope.toggle = !$scope.toggle;
@@ -23,13 +24,23 @@
       return console.log(user);
     };
     $scope.resourceClick = function(productName, resourceName, feature, data) {
-      if (__indexOf.call($scope.inpulessFeatures, feature) >= 0) {
-        return console.log('feature input filtered', feature);
+      var _this = this;
+      if (__indexOf.call($scope.inputlessFeatures, feature) >= 0) {
+        console.log('feature input filtered', feature);
+        return $http.post('/' + productName + '/' + resourceName + '/' + feature, data).success(function(resp) {
+          return $scope.palettes[productName].models = resp;
+        });
       } else {
+        $scope.tmpToggle = !$scope.tmpToggle;
         return $scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show = !$scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show;
       }
     };
-    return $scope.resourceSubmit = function() {};
+    $scope.resourceSubmit = function() {
+      return $http.post('/' + productName + '/' + resourceName + '/' + feature, data).success(function(resp) {
+        return $scope.palettes[productName].models = resp;
+      });
+    };
+    return $scope.getModelDetails = function() {};
   });
 
 }).call(this);

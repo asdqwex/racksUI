@@ -25,17 +25,26 @@
 				<li ng-repeat="feature in product.productFeatures"><h5>{{feature}}</h5></li>
 			</ul>
 			<div ng-repeat="(resourceName, resource) in product.resources">
-				<strong>{{resourceName}}</strong>
-				<div class="feature"  ng-repeat="(featureName, feature) in resource.resourceFeatures"> <button class="btn" ng-click="resourceClick(productName,resourceName,featureName, {})">{{featureName}}</button>
-				<input ng-show="feature.show" type="text"><button ng-show="feature.show" ng-click="resourceSubmit()" type="submit" class="btn btn-default">Submit</button>
-				</div>
+				<strong>{{resourceName}}</strong><br>
+				<span  class="feature"  ng-repeat="(featureName, feature) in resource.resourceFeatures"> 
+					<button class="btn" ng-click="resourceClick(productName,resourceName,featureName, {})">{{featureName}}</button>
+				</span>
 			</div>
+			<h4> Instances </h4>
 			<div ng-repeat="(modelName, model) in product.models">
-				<strong>{{model.name}}</strong>
-				<div ng-show="model.show">{{model.details}}</div>
+				<strong ng-click="getModelDetails(model)">{{model.name}}</strong>
+				<div>{{model.details}}</div>
 			</div>
 		</div>
 	</div>
+<div class="newServerFormContainer" ng-show="tmpToggle">	
+	<div class="newServerForm">
+		<input type="text"><br>
+		<input type="text"><br>
+		<button calss="btn">Submit</button>
+	</div>
+</div>
+
 
 </div>
 </body>
