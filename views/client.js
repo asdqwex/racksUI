@@ -27,6 +27,13 @@
       var _this = this;
       if (__indexOf.call($scope.inputlessFeatures, feature) >= 0) {
         return $http.post('/' + productName + '/' + resourceName + '/' + feature, data).success(function(resp) {
+          if (resp.length === 0) {
+            resp = [
+              {
+                name: 'No results'
+              }
+            ];
+          }
           return $scope.palettes[productName].resources[resourceName].models = resp;
         });
       } else {
@@ -37,7 +44,14 @@
     };
     $scope.resourceSubmit = function() {
       return $http.post('/' + productName + '/' + resourceName + '/' + feature, data).success(function(resp) {
-        return $scope.palettes[productName].models = resp;
+        if (resp.length === 0) {
+          resp = [
+            {
+              name: 'No results'
+            }
+          ];
+        }
+        return $scope.palettes[productName].resources[resourceName].models = resp;
       });
     };
     return $scope.getModelDetails = function() {};

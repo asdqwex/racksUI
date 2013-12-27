@@ -36,7 +36,7 @@
 								</div>
 							</div>
 							<div ng-repeat="model in resource.models">
-								<strong ng-click="getModelDetails(model)">{{model.name || model.id}}</strong>
+								<span ng-click="getModelDetails(model)">{{model.name || model.id}}</span>
 								<div>{{model.details}}</div>
 							</div>
 						</div>

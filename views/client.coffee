@@ -16,6 +16,7 @@ client.controller 'MainCtrl', ($scope, $http) ->
 	$scope.resourceClick = (productName,resourceName, feature, data) ->
 		if feature in $scope.inputlessFeatures
 			$http.post('/'+productName+'/'+resourceName+'/'+feature, data).success (resp) =>
+				resp = [ { name: 'No results' } ] if resp.length == 0
 				$scope.palettes[productName].resources[resourceName].models = resp
 		else
 			console.log('feature:', feature);
@@ -23,7 +24,6 @@ client.controller 'MainCtrl', ($scope, $http) ->
 			$scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show = !$scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show
 	$scope.resourceSubmit = () =>
 		$http.post('/'+productName+'/'+resourceName+'/'+feature, data).success (resp) =>
-				$scope.palettes[productName].models = resp
+			resp = [ { name: 'No results' } ] if resp.length == 0
+			$scope.palettes[productName].resources[resourceName].models = resp
 	$scope.getModelDetails = () =>
-
-		
