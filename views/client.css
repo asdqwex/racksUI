@@ -92,20 +92,31 @@ li {
 	margin-bottom: 7px;
 	margin-top: 7px;
 }
-.newServerFormContainer {
+.featureFormContainer {
 	background-color: rgba(0,0,0,0.5);
-	position: absolute;
+	position: fixed;
 	top: 0;
+	left: 0;
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
 	width: 100%;
 	height: 100%;
 }
-.newServerForm {
+.featureFormContainer main {
+	width: 25%;
 	margin: 0 auto;
-	margin-top: 15%;
 }
+
 .cloudImages, .cloudOrchestration, .cloudFilesCDN {
 	display: none;
+}
+.row {
+	width: 100%;
+}
+.rightAlign {
+	text-align: right;
+}
+.leftAlign {
+	text-align: left;
 }

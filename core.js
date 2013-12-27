@@ -104,7 +104,8 @@
             products[productName].resources[resourceName] = {
               modelFeatures: modelFeatures,
               resourceFeatures: resourceFeatures,
-              models: []
+              models: [],
+              meta: rack[productName][resourceName].meta
             };
           }
         }

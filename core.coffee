@@ -79,6 +79,7 @@ webserver.post '/getAccount', (req, res) =>
 						modelFeatures: modelFeatures
 						resourceFeatures: resourceFeatures
 						models: []
+						meta: rack[productName][resourceName].meta
 		res.send(products)
 webserver.post '/:productName/:resourceName/:feature', (req, res) =>
 	if rack

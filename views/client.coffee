@@ -3,12 +3,16 @@ client = angular.module('client', [])
 client.controller 'MainCtrl', ($scope, $http) ->
 	$scope.palettes = {}
 	$scope.user = {}
-	$scope.tmpToggle = 0
 	$scope.toggle = 1
 	$scope.getAccount = (user) ->
 		$scope.toggle = !$scope.toggle
 		$http.post('/getAccount', user).success (resp) =>
 			$scope.palettes = resp
+			for productName, product of $scope.palettes
+				for resourceName, resource of product.resources
+					for featureName, feature of resource.resourceFeatures
+						feature.show = 0
+
 	# FOR DEV MODE ONLY
 	$scope.getAccount({ username: 'dummy', apiKey: 'dummy' });
 
@@ -20,7 +24,7 @@ client.controller 'MainCtrl', ($scope, $http) ->
 				$scope.palettes[productName].resources[resourceName].models = resp
 		else
 			console.log('feature:', feature);
-			$scope.tmpToggle = !$scope.tmpToggle
+			console.log 'meta', $scope.palettes[productName].resources[resourceName]
 			$scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show = !$scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show
 	$scope.resourceSubmit = () =>
 		$http.post('/'+productName+'/'+resourceName+'/'+feature, data).success (resp) =>

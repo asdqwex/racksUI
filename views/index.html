@@ -32,7 +32,21 @@
 							<div class="resourceHeader">
 								<div class="resourceName">{{resourceName}}:</div>
 								<div class="btn-group resourceFeatures">
-									<button ng-repeat="(featureName, feature) in resource.resourceFeatures" class="btn btn-default btn-xs" ng-click="resourceClick(productName,resourceName, featureName, {})">{{featureName}}</button>
+									<div ng-repeat="(featureName, feature) in resource.resourceFeatures">
+										<div class="featureFormContainer" ng-show="feature.show">	
+											<main>
+												<form class="resourceForm" role="form">
+													<div class="row" ng-repeat="(field, fieldType) in resource.meta.requiredFields">
+														<div class="leftAlign"><label for="Username">{{field}}</label> </div>
+														<div class="rightAlign"><input ng-model="temp" type="text" class="" placeholder="{{fieldType}}"><br></div>
+													</div>
+													<button ng-click="" type="submit" class="btn btn-default">Submit</button>
+													<button ng-click="" type="submit" class="btn btn-default">Cancel</button>
+												</form>
+											</main>
+										</div>
+										<button class="btn btn-default btn-xs" ng-click="resourceClick(productName,resourceName, featureName, {})">{{featureName}}</button>
+									</div>
 								</div>
 							</div>
 							<div ng-repeat="model in resource.models">
@@ -41,13 +55,6 @@
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div class="newServerFormContainer" ng-show="tmpToggle">	
-				<div class="newServerForm">
-					<input type="text"><br>
-					<input type="text"><br>
-					<button calss="btn">Submit</button>
 				</div>
 			</div>
 		</div>

@@ -9,13 +9,38 @@
     var _this = this;
     $scope.palettes = {};
     $scope.user = {};
-    $scope.tmpToggle = 0;
     $scope.toggle = 1;
     $scope.getAccount = function(user) {
       var _this = this;
       $scope.toggle = !$scope.toggle;
       return $http.post('/getAccount', user).success(function(resp) {
-        return $scope.palettes = resp;
+        var feature, featureName, product, productName, resource, resourceName, _ref, _results;
+        $scope.palettes = resp;
+        _ref = $scope.palettes;
+        _results = [];
+        for (productName in _ref) {
+          product = _ref[productName];
+          _results.push((function() {
+            var _ref1, _results1;
+            _ref1 = product.resources;
+            _results1 = [];
+            for (resourceName in _ref1) {
+              resource = _ref1[resourceName];
+              _results1.push((function() {
+                var _ref2, _results2;
+                _ref2 = resource.resourceFeatures;
+                _results2 = [];
+                for (featureName in _ref2) {
+                  feature = _ref2[featureName];
+                  _results2.push(feature.show = 0);
+                }
+                return _results2;
+              })());
+            }
+            return _results1;
+          })());
+        }
+        return _results;
       });
     };
     $scope.getAccount({
@@ -38,7 +63,7 @@
         });
       } else {
         console.log('feature:', feature);
-        $scope.tmpToggle = !$scope.tmpToggle;
+        console.log('meta', $scope.palettes[productName].resources[resourceName]);
         return $scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show = !$scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show;
       }
     };
