@@ -8,6 +8,7 @@
   client.controller('MainCtrl', function($scope, $http) {
     var _this = this;
     $scope.palettes = {};
+    $scope.request = {};
     $scope.user = {};
     $scope.toggle = 1;
     $scope.getAccount = function(user) {
@@ -79,7 +80,18 @@
         return $scope.palettes[productName].resources[resourceName].models = resp;
       });
     };
-    return $scope.getModelDetails = function() {};
+    return $scope.formSubmit = function(formData) {
+      var fieldName, fieldValue, _ref, _results;
+      formData.show = !formData.show;
+      console.log('submit click');
+      _ref = formData.request;
+      _results = [];
+      for (fieldName in _ref) {
+        fieldValue = _ref[fieldName];
+        _results.push(console.log('request item', fieldName, fieldValue));
+      }
+      return _results;
+    };
   });
 
 }).call(this);

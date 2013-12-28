@@ -36,12 +36,20 @@
 										<div class="featureFormContainer" ng-show="feature.show">	
 											<main>
 												<form class="resourceForm" role="form">
-													<div class="row" ng-repeat="(field, fieldType) in resource.meta.requiredFields">
-														<div class="leftAlign"><label for="Username">{{field}}</label> </div>
-														<div class="rightAlign"><input ng-model="temp" type="text" class="" placeholder="{{fieldType}}"><br></div>
+													<div class="row">
+														<table>
+															<tr ng-repeat="(field, fieldType) in resource.meta.requiredFields">
+																<td class="leftAlign">
+																	<label>{{field}}</label> 
+																</td>
+																<td class="rightAlign">
+																	<input ng-model="feature.request[field]" type="text" placeholder="{{fieldType}}">
+																</td>
+															</tr>
+														</table>
 													</div>
-													<button ng-click="" type="submit" class="btn btn-default">Submit</button>
-													<button ng-click="" type="submit" class="btn btn-default">Cancel</button>
+													<button ng-click="formSubmit(feature)" type="submit" class="btn btn-default">Submit</button>
+													<button ng-click="feature.show = !feature.show" type="submit" class="btn btn-default">Cancel</button>
 												</form>
 											</main>
 										</div>

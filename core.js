@@ -96,7 +96,8 @@
                 featureObject = {};
                 featureObject = {
                   show: 0,
-                  details: feature
+                  details: feature,
+                  request: {}
                 };
                 resourceFeatures[featureName] = featureObject;
               }

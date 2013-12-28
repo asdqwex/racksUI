@@ -2,6 +2,7 @@ client = angular.module('client', [])
  
 client.controller 'MainCtrl', ($scope, $http) ->
 	$scope.palettes = {}
+	$scope.request = {}
 	$scope.user = {}
 	$scope.toggle = 1
 	$scope.getAccount = (user) ->
@@ -30,4 +31,8 @@ client.controller 'MainCtrl', ($scope, $http) ->
 		$http.post('/'+productName+'/'+resourceName+'/'+feature, data).success (resp) =>
 			resp = [ { name: 'No results' } ] if resp.length == 0
 			$scope.palettes[productName].resources[resourceName].models = resp
-	$scope.getModelDetails = () =>
+	$scope.formSubmit = (formData) =>
+		formData.show = !formData.show
+		console.log 'submit click'
+		for fieldName, fieldValue of formData.request
+			console.log 'request item', fieldName, fieldValue

@@ -72,6 +72,7 @@ webserver.post '/getAccount', (req, res) =>
 							featureObject = {
 								show: 0
 								details: feature
+								request: {}
 							}
 							resourceFeatures[featureName] = featureObject
 					#console.log resourceFeatures
