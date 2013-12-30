@@ -5,6 +5,8 @@ client.controller 'MainCtrl', ($scope, $http) ->
 	$scope.request = {}
 	$scope.user = {}
 	$scope.toggle = 1
+	$scope.flavors = {}
+	$scope.images = {}
 	$scope.getAccount = (user) ->
 		$scope.toggle = !$scope.toggle
 		$http.post('/getAccount', user).success (resp) =>
@@ -13,6 +15,10 @@ client.controller 'MainCtrl', ($scope, $http) ->
 				for resourceName, resource of product.resources
 					for featureName, feature of resource.resourceFeatures
 						feature.show = 0
+			$http.post('/cloudServersOpenStack/flavors/all').success (resp) =>
+				$scope.flavors = resp
+			$http.post('/cloudServersOpenStack/images/all').success (resp) =>
+				$scope.images = resp
 
 	# FOR DEV MODE ONLY
 	$scope.getAccount({ username: 'dummy', apiKey: 'dummy' });
@@ -36,3 +42,10 @@ client.controller 'MainCtrl', ($scope, $http) ->
 		console.log 'submit click'
 		for fieldName, fieldValue of formData.request
 			console.log 'request item', fieldName, fieldValue
+	$scope.serverFormCheck = (productName) =>
+		if productName =='cloudServersOpenStack'
+			return true
+		else
+			return false
+
+		

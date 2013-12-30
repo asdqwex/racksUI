@@ -19,7 +19,7 @@ rackAuth = (cb) ->
 		cb() 
 	else
 		# for dev mode, use auth passed in from args -> THIS MEANS ANYONE USING THE SITE WILL USE THIS API KEY -> SO DEV MODE ONLY
-		new racksjs {username: process.argv[2], apiKey: process.argv[3], verbosity: 5, cache: true}, (newRack) =>
+		new racksjs {username: process.argv[2], apiKey: process.argv[3], verbosity: 5, cache:  false}, (newRack) =>
 		# This is to use the string passed in from the /getAccount route - ie: production mode
 		# new racksjs {username: req.body.name, apiKey: req.body.apiKey, verbosity: 0, cache: true}, (newRack) =>
 			if rack.error
@@ -39,7 +39,7 @@ webserver.get '/', (req, res) =>
 
 webserver.post '/getAccount', (req, res) =>
 	rackAuth () =>
-		console.log 'rackspace auth successful'
+		console.log 'rackspace auth successful', req.body
 		response = {}
 		counter = 0
 		products = {}
@@ -93,6 +93,10 @@ webserver.post '/:productName/:resourceName/:feature', (req, res) =>
 	else
 		console.log 'please auth'
 		res.send []
+webserver.get 'getFlavors', (req, res) =>
+
+
+
 
 # Start Server
 webserver.listen(3000)

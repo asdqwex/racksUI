@@ -4,9 +4,9 @@ body {
 }
 
 .gridmode {
-	column-count: 4;
+	column-count: 3;
 	width: 100%;
-	-moz-column-count: 4;
+	-moz-column-count: 3;
 }
 
 .racksAuthform {
@@ -119,5 +119,8 @@ li {
 }
 .leftAlign {
 	text-align: left;
+	color: white;
+}
+.white {
 	color: white;
 }

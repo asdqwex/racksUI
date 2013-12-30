@@ -11,37 +11,33 @@
     $scope.request = {};
     $scope.user = {};
     $scope.toggle = 1;
+    $scope.flavors = {};
+    $scope.images = {};
     $scope.getAccount = function(user) {
       var _this = this;
       $scope.toggle = !$scope.toggle;
       return $http.post('/getAccount', user).success(function(resp) {
-        var feature, featureName, product, productName, resource, resourceName, _ref, _results;
+        var feature, featureName, product, productName, resource, resourceName, _ref, _ref1, _ref2;
         $scope.palettes = resp;
         _ref = $scope.palettes;
-        _results = [];
         for (productName in _ref) {
           product = _ref[productName];
-          _results.push((function() {
-            var _ref1, _results1;
-            _ref1 = product.resources;
-            _results1 = [];
-            for (resourceName in _ref1) {
-              resource = _ref1[resourceName];
-              _results1.push((function() {
-                var _ref2, _results2;
-                _ref2 = resource.resourceFeatures;
-                _results2 = [];
-                for (featureName in _ref2) {
-                  feature = _ref2[featureName];
-                  _results2.push(feature.show = 0);
-                }
-                return _results2;
-              })());
+          _ref1 = product.resources;
+          for (resourceName in _ref1) {
+            resource = _ref1[resourceName];
+            _ref2 = resource.resourceFeatures;
+            for (featureName in _ref2) {
+              feature = _ref2[featureName];
+              feature.show = 0;
             }
-            return _results1;
-          })());
+          }
         }
-        return _results;
+        $http.post('/cloudServersOpenStack/flavors/all').success(function(resp) {
+          return $scope.flavors = resp;
+        });
+        return $http.post('/cloudServersOpenStack/images/all').success(function(resp) {
+          return $scope.images = resp;
+        });
       });
     };
     $scope.getAccount({
@@ -80,7 +76,7 @@
         return $scope.palettes[productName].resources[resourceName].models = resp;
       });
     };
-    return $scope.formSubmit = function(formData) {
+    $scope.formSubmit = function(formData) {
       var fieldName, fieldValue, _ref, _results;
       formData.show = !formData.show;
       console.log('submit click');
@@ -91,6 +87,13 @@
         _results.push(console.log('request item', fieldName, fieldValue));
       }
       return _results;
+    };
+    return $scope.serverFormCheck = function(productName) {
+      if (productName === 'cloudServersOpenStack') {
+        return true;
+      } else {
+        return false;
+      }
     };
   });
 

@@ -31,7 +31,7 @@
         username: process.argv[2],
         apiKey: process.argv[3],
         verbosity: 5,
-        cache: true
+        cache: false
       }, function(newRack) {
         if (rack.error) {
           console.log(rack.error);
@@ -58,7 +58,7 @@
   webserver.post('/getAccount', function(req, res) {
     return rackAuth(function() {
       var counter, feature, featureName, featureObject, filteredResourceFeatures, modelFeatures, product, productName, products, resource, resourceFeatures, resourceName, response, _ref, _ref1, _ref2;
-      console.log('rackspace auth successful');
+      console.log('rackspace auth successful', req.body);
       response = {};
       counter = 0;
       products = {};
@@ -130,6 +130,8 @@
       return res.send([]);
     }
   });
+
+  webserver.get('getFlavors', function(req, res) {});
 
   webserver.listen(3000);
 
