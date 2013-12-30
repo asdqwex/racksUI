@@ -7,6 +7,6 @@ Installation:
 5. compile coffee: coffee -c core.coffee && coffee -c views/client.coffee
 
 Running:
-$> node core.js
+$> node core.js {{rackspace username}} {{apiKey}}
 
 point broswer to: http://localhost:3000
