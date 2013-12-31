@@ -82,7 +82,7 @@ webserver.post '/getAccount', (req, res) =>
 						models: []
 						meta: rack[productName][resourceName].meta
 		res.send(products)
-webserver.post '/:productName/:resourceName/:feature', (req, res) =>
+webserver.post '/resources/:productName/:resourceName/:feature', (req, res) =>
 	if rack
 		if typeof rack[req.params.productName][req.params.resourceName][req.params.feature] == 'function'
 			rack[req.params.productName][req.params.resourceName][req.params.feature] (reply) ->
@@ -93,10 +93,19 @@ webserver.post '/:productName/:resourceName/:feature', (req, res) =>
 	else
 		console.log 'please auth'
 		res.send []
-webserver.get 'getFlavors', (req, res) =>
 
-
-
+webserver.post '/actions/:modelName/:modelAction', (req, res) =>
+	#console.log 'action:',req.body.action
+	#console.log 'id:', req.body.id
+	action = req.body.action
+	assumeObject = {
+		id: req.body.id
+	}
+	rack.cloudServersOpenStack.servers.assume assumeObject , (reply) =>
+		#console.log res
+		reply.details (reply) =>
+			console.log reply.server
+			res.send reply.server
 
 # Start Server
 webserver.listen(3000)

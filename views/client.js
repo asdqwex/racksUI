@@ -48,7 +48,7 @@
     $scope.resourceClick = function(productName, resourceName, feature, data) {
       var _this = this;
       if (__indexOf.call($scope.inputlessFeatures, feature) >= 0) {
-        return $http.post('/' + productName + '/' + resourceName + '/' + feature, data).success(function(resp) {
+        return $http.post('/resources/' + productName + '/' + resourceName + '/' + feature, data).success(function(resp) {
           if (resp.length === 0) {
             resp = [
               {
@@ -88,12 +88,24 @@
       }
       return _results;
     };
-    return $scope.serverFormCheck = function(productName) {
+    $scope.serverFormCheck = function(productName) {
       if (productName === 'cloudServersOpenStack') {
         return true;
       } else {
         return false;
       }
+    };
+    return $scope.modelAction = function(Modelaction, model) {
+      var data;
+      console.log('action:', Modelaction);
+      console.log('model:', model.id);
+      data = {
+        id: model.id,
+        action: Modelaction
+      };
+      return $http.post('/actions/' + model.id + '/' + Modelaction, data).success(function(resp) {
+        return model.details = resp;
+      });
     };
   });
 

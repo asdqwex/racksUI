@@ -115,7 +115,7 @@
     });
   });
 
-  webserver.post('/:productName/:resourceName/:feature', function(req, res) {
+  webserver.post('/resources/:productName/:resourceName/:feature', function(req, res) {
     if (rack) {
       if (typeof rack[req.params.productName][req.params.resourceName][req.params.feature] === 'function') {
         return rack[req.params.productName][req.params.resourceName][req.params.feature](function(reply) {
@@ -131,7 +131,19 @@
     }
   });
 
-  webserver.get('getFlavors', function(req, res) {});
+  webserver.post('/actions/:modelName/:modelAction', function(req, res) {
+    var action, assumeObject;
+    action = req.body.action;
+    assumeObject = {
+      id: req.body.id
+    };
+    return rack.cloudServersOpenStack.servers.assume(assumeObject, function(reply) {
+      return reply.details(function(reply) {
+        console.log(reply.server);
+        return res.send(reply.server);
+      });
+    });
+  });
 
   webserver.listen(3000);
 

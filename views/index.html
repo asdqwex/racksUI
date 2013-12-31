@@ -72,43 +72,17 @@
 													</table> 
 												</form>
 											</main>
-
-											<!-- 
-											<main ng-switch on="featureName">
-												<form ng-switch-when="new" class="resourceForm" role="form">
-													<div class="row">
-														<table>
-															<tr>
-																<td>
-																	<label>Flavor</label> 
-																</td>
-																<td>
-																	<select ng-model="flavor" ng-options="flavor.name for flavor in flavors"></select>
-																</td>
-															</tr>
-															<tr>
-																<td>
-																	<label>Image</label> 
-																</td>
-																<td>
-																	<select ng-model="image" ng-options="image.name for image in images"></select>
-																</td>
-															</tr>
-														</table>
-													</div>
-
-												</form>
-											</main>
-											-->
-
 										</div>
 										<button class="btn btn-default btn-xs" ng-click="resourceClick(productName,resourceName, featureName, {})">{{featureName}}</button>
 									</div>
 								</div>
 							</div>
 							<div ng-repeat="model in resource.models">
-								<span ng-click="getModelDetails(model)">{{model.name || model.id}}</span>
-								<div>{{model.details}}</div>
+								<span ng-click="model.showActions = !model.showActions">{{model.name || model.id}}</span>
+								<div>{{model.details.accessIPv4}}</div>
+								<ul>
+									<li ng-show="model.showActions" ng-repeat="action in resource.modelFeatures" ng-click="modelAction(action, model)">{{action}}</li>
+								</ul>
 							</div>
 						</div>
 					</div>
