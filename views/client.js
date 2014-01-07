@@ -13,6 +13,7 @@
     $scope.toggle = 1;
     $scope.flavors = {};
     $scope.images = {};
+    $scope.actions = {};
     $scope.getAccount = function(user) {
       var _this = this;
       $scope.toggle = !$scope.toggle;
@@ -32,10 +33,10 @@
             }
           }
         }
-        $http.post('/cloudServersOpenStack/flavors/all').success(function(resp) {
+        $http.get('/resources/cloudServersOpenStack/flavors/all').success(function(resp) {
           return $scope.flavors = resp;
         });
-        return $http.post('/cloudServersOpenStack/images/all').success(function(resp) {
+        return $http.get('/resources/cloudServersOpenStack/images/all').success(function(resp) {
           return $scope.images = resp;
         });
       });
@@ -45,10 +46,10 @@
       apiKey: 'dummy'
     });
     $scope.inputlessFeatures = ['all'];
-    $scope.resourceClick = function(productName, resourceName, feature, data) {
+    $scope.resourceClick = function(productName, resourceName, feature) {
       var _this = this;
       if (__indexOf.call($scope.inputlessFeatures, feature) >= 0) {
-        return $http.post('/resources/' + productName + '/' + resourceName + '/' + feature, data).success(function(resp) {
+        return $http.get('/resources/' + productName + '/' + resourceName + '/' + feature).success(function(resp) {
           if (resp.length === 0) {
             resp = [
               {
@@ -64,29 +65,18 @@
         return $scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show = !$scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show;
       }
     };
-    $scope.resourceSubmit = function() {
-      return $http.post('/' + productName + '/' + resourceName + '/' + feature, data).success(function(resp) {
-        if (resp.length === 0) {
-          resp = [
-            {
-              name: 'No results'
-            }
-          ];
-        }
-        return $scope.palettes[productName].resources[resourceName].models = resp;
-      });
-    };
     $scope.formSubmit = function(formData) {
-      var fieldName, fieldValue, _ref, _results;
+      var reqData;
       formData.show = !formData.show;
-      console.log('submit click');
-      _ref = formData.request;
-      _results = [];
-      for (fieldName in _ref) {
-        fieldValue = _ref[fieldName];
-        _results.push(console.log('request item', fieldName, fieldValue));
-      }
-      return _results;
+      reqData = {
+        name: formData.name,
+        flavor: formData.flavor.id,
+        image: formData.image.id
+      };
+      console.log(reqData);
+      return $http.post('/resources/cloudServersOpenStack/servers/new', reqData).success(function(resp) {
+        return console.log(resp);
+      });
     };
     $scope.serverFormCheck = function(productName) {
       if (productName === 'cloudServersOpenStack') {
@@ -95,16 +85,18 @@
         return false;
       }
     };
-    return $scope.modelAction = function(Modelaction, model) {
+    return $scope.modelAction = function(productName, resourceName, Modelaction, model) {
       var data;
-      console.log('action:', Modelaction);
-      console.log('model:', model.id);
+      model.action = {};
+      model.action.show = !model.action.show;
       data = {
+        product: productName,
+        resource: resourceName,
         id: model.id,
         action: Modelaction
       };
       return $http.post('/actions/' + model.id + '/' + Modelaction, data).success(function(resp) {
-        return model.details = resp;
+        return model.action.output = resp;
       });
     };
   });

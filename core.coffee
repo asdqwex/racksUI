@@ -19,7 +19,7 @@ rackAuth = (cb) ->
 		cb() 
 	else
 		# for dev mode, use auth passed in from args -> THIS MEANS ANYONE USING THE SITE WILL USE THIS API KEY -> SO DEV MODE ONLY
-		new racksjs {username: process.argv[2], apiKey: process.argv[3], verbosity: 5, cache:  false}, (newRack) =>
+		new racksjs {username: process.argv[2], apiKey: process.argv[3], verbosity: 0, cache:  false}, (newRack) =>
 		# This is to use the string passed in from the /getAccount route - ie: production mode
 		# new racksjs {username: req.body.name, apiKey: req.body.apiKey, verbosity: 0, cache: true}, (newRack) =>
 			if rack.error
@@ -49,8 +49,8 @@ webserver.post '/getAccount', (req, res) =>
 				productFeatures: []
 				resources: {}
 				meta: {
-					target: rack[productName].meta.target(),
-					endpoints: rack[productName].meta.endpoints
+					target: rack[productName]._racksmeta.target(),
+					endpoints: rack[productName]._racksmeta.endpoints
 				}
 			}
 			for resourceName, resource of rack.products[productName]
@@ -63,7 +63,7 @@ webserver.post '/getAccount', (req, res) =>
 					else
 						modelFeatures = Object.keys(rack[productName][resourceName].model({}))
 					resourceFeatures = {}
-					filteredResourceFeatures = ['assume', 'meta', 'model']
+					filteredResourceFeatures = ['assume', '_racksmeta', 'model']
 					for featureName, feature of rack[productName][resourceName]
 						if featureName in filteredResourceFeatures
 							#console.log 'feature filtered:', featureName
@@ -82,10 +82,26 @@ webserver.post '/getAccount', (req, res) =>
 						models: []
 						meta: rack[productName][resourceName].meta
 		res.send(products)
-webserver.post '/resources/:productName/:resourceName/:feature', (req, res) =>
+webserver.get '/resources/:productName/:resourceName/:feature', (req, res) =>
 	if rack
 		if typeof rack[req.params.productName][req.params.resourceName][req.params.feature] == 'function'
 			rack[req.params.productName][req.params.resourceName][req.params.feature] (reply) ->
+				#console.log reply
+				res.send reply
+		else
+			console.log('REQUESTED FEATURE WAS NOT A FUNCTION:', req.params)
+			res.send []
+	else
+		console.log 'please auth'
+		res.send []
+
+webserver.post '/resources/:productName/:resourceName/:feature', (req, res) =>
+	#console.log req.body
+	postObj = req.body
+	if rack
+		if typeof rack[req.params.productName][req.params.resourceName][req.params.feature] == 'function'
+			rack[req.params.productName][req.params.resourceName][req.params.feature] postObj, (reply) ->
+				#console.log reply
 				res.send reply
 		else
 			console.log('REQUESTED FEATURE WAS NOT A FUNCTION:', req.params)
@@ -95,17 +111,13 @@ webserver.post '/resources/:productName/:resourceName/:feature', (req, res) =>
 		res.send []
 
 webserver.post '/actions/:modelName/:modelAction', (req, res) =>
-	#console.log 'action:',req.body.action
-	#console.log 'id:', req.body.id
 	action = req.body.action
 	assumeObject = {
 		id: req.body.id
 	}
-	rack.cloudServersOpenStack.servers.assume assumeObject , (reply) =>
-		#console.log res
-		reply.details (reply) =>
-			console.log reply.server
-			res.send reply.server
+	rack[req.body.product][req.body.resource].assume assumeObject, (reply) =>
+		reply[action] (reply) =>
+			res.send reply
 
 # Start Server
 webserver.listen(3000)

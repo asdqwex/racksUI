@@ -30,7 +30,7 @@
       return new racksjs({
         username: process.argv[2],
         apiKey: process.argv[3],
-        verbosity: 5,
+        verbosity: 0,
         cache: false
       }, function(newRack) {
         if (rack.error) {
@@ -69,8 +69,8 @@
           productFeatures: [],
           resources: {},
           meta: {
-            target: rack[productName].meta.target(),
-            endpoints: rack[productName].meta.endpoints
+            target: rack[productName]._racksmeta.target(),
+            endpoints: rack[productName]._racksmeta.endpoints
           }
         };
         _ref1 = rack.products[productName];
@@ -86,7 +86,7 @@
               modelFeatures = Object.keys(rack[productName][resourceName].model({}));
             }
             resourceFeatures = {};
-            filteredResourceFeatures = ['assume', 'meta', 'model'];
+            filteredResourceFeatures = ['assume', '_racksmeta', 'model'];
             _ref2 = rack[productName][resourceName];
             for (featureName in _ref2) {
               feature = _ref2[featureName];
@@ -115,10 +115,28 @@
     });
   });
 
-  webserver.post('/resources/:productName/:resourceName/:feature', function(req, res) {
+  webserver.get('/resources/:productName/:resourceName/:feature', function(req, res) {
     if (rack) {
       if (typeof rack[req.params.productName][req.params.resourceName][req.params.feature] === 'function') {
         return rack[req.params.productName][req.params.resourceName][req.params.feature](function(reply) {
+          return res.send(reply);
+        });
+      } else {
+        console.log('REQUESTED FEATURE WAS NOT A FUNCTION:', req.params);
+        return res.send([]);
+      }
+    } else {
+      console.log('please auth');
+      return res.send([]);
+    }
+  });
+
+  webserver.post('/resources/:productName/:resourceName/:feature', function(req, res) {
+    var postObj;
+    postObj = req.body;
+    if (rack) {
+      if (typeof rack[req.params.productName][req.params.resourceName][req.params.feature] === 'function') {
+        return rack[req.params.productName][req.params.resourceName][req.params.feature](postObj, function(reply) {
           return res.send(reply);
         });
       } else {
@@ -137,10 +155,9 @@
     assumeObject = {
       id: req.body.id
     };
-    return rack.cloudServersOpenStack.servers.assume(assumeObject, function(reply) {
-      return reply.details(function(reply) {
-        console.log(reply.server);
-        return res.send(reply.server);
+    return rack[req.body.product][req.body.resource].assume(assumeObject, function(reply) {
+      return reply[action](function(reply) {
+        return res.send(reply);
       });
     });
   });

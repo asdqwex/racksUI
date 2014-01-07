@@ -42,7 +42,7 @@
 																Name:
 															</td>
 															<td>
-																<input type="text" ng-model="user.name">
+																<input type="text" ng-model="formData.name">
 															</td>
 														</tr>
 														<tr>
@@ -50,7 +50,7 @@
 																Flavor:
 															</td>
 															<td>
-																<select ng-model="flavor" ng-options="flavor.name for flavor in flavors"></select>
+																<select ng-model="formData.flavor" ng-options="flavor.name for flavor in flavors"></select>
 															</td>
 														</tr>
 														<tr>
@@ -58,12 +58,12 @@
 																Image:
 															</td>
 															<td>
-																<select ng-model="image" ng-options="image.name for image in images"></select>
+																<select ng-model="formData.image" ng-options="image.name for image in images"></select>
 															</td>
 														</tr>
 														<tr>
 															<td>
-																<button ng-click="formSubmit(feature)" type="submit" class="btn btn-default">Submit</button>
+																<button ng-click="formSubmit(formData)" type="submit" class="btn btn-default">Submit</button>
 															</td>
 															<td>
 																<button ng-click="feature.show = !feature.show" type="submit" class="btn btn-default">Cancel</button>
@@ -78,11 +78,14 @@
 								</div>
 							</div>
 							<div ng-repeat="model in resource.models">
-								<span ng-click="model.showActions = !model.showActions">{{model.name || model.id}}</span>
-								<div>{{model.details.accessIPv4}}</div>
-								<ul>
-									<li ng-show="model.showActions" ng-repeat="action in resource.modelFeatures" ng-click="modelAction(action, model)">{{action}}</li>
-								</ul>
+								<span>{{model.name || model.id}}</span>
+								<div class="action white" ng-show="model.action.show">
+									<code ng-repeat="(key, value) in model.action.output">{{key}} : {{value}}<br></code>
+									<button ng-click="model.action.show = !model.action.show" type="submit" class="btn btn-default">Cancel</button>
+								</div>
+								<select>
+									<option ng-repeat="action in resource.modelFeatures | filter: '!delete'| filter: '!metadata'" ng-click="modelAction(productName, resourceName, action, model)">{{action}}</option>
+								</select>
 							</div>
 						</div>
 					</div>
