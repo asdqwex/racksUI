@@ -28,9 +28,10 @@
 						<button ng-repeat="feature in product.productFeatures" class="btn btn-default btn-xs" ng-click="productFeatureClick(productName, feature, {})">{{feature}}</button>
 					</div>
 					<div class="productResources">
-						<div class="resource" ng-repeat="(resourceName, resource) in product.resources">
+						<div class="resource" ng-repeat="(resourceName, resource) in product.resources" ng-init="resource.showModels=0">
 							<div class="resourceHeader">
 								<div class="resourceName">{{resourceName}}:</div>
+								<div class="rightAlign"><button ng-repeat="(featureName, feature) in resource.resourceFeatures | orderBy:featureName:!reverse" class="btn btn-default btn-xs" ng-click="resourceClick(productName,resourceName, featureName, {})">{{featureName}}</button></div>
 								<div class="btn-group resourceFeatures">
 									<div ng-repeat="(featureName, feature) in resource.resourceFeatures">
 										<div class="featureFormContainer" ng-show="feature.show" >
@@ -73,20 +74,23 @@
 												</form>
 											</main>
 										</div>
-										<button class="btn btn-default btn-xs" ng-click="resourceClick(productName,resourceName, featureName, {})">{{featureName}}</button>
 									</div>
 								</div>
 							</div>
-							<div ng-repeat="model in resource.models">
-								<span>{{model.name || model.id}}</span>
-								<div class="action white" ng-show="model.action.show">
-									<pre>{{model.action.output}}</pre>
-									<button ng-click="model.action.show = !model.action.show" type="submit" class="btn btn-default">Cancel</button>
+							<div class="action white" ng-show="resource.showModels">
+								<button ng-click="resource.showModels = !resource.showModels" class="btn btn-xs">Close</button>
+								<h4>Models</h4>
+								<div ng-repeat="model in resource.models">
+									<span>{{model.name || model.id}}</span><br>
+									<select ng-model="selectedAction">
+										<option ng-repeat="action in resource.modelFeatures | filter: '!metadata'">{{action}}</option>
+									</select>
+									<button ng-click="modelAction(productName, resourceName, selectedAction, model)">Submit</button>
+									<button ng-click="model.action.show = !model.action.show">Cancel</button>
+									<div ng-show="model.action.show">
+										<pre>{{model.action.output}}</pre>
+									</div>
 								</div>
-								<select ng-model="selectedAction">
-									<option ng-repeat="action in resource.modelFeatures | filter: '!metadata'">{{action}}</option>
-								</select>
-								<button ng-click="modelAction(productName, resourceName, selectedAction, model)">Submit</button>
 							</div>
 						</div>
 					</div>

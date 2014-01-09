@@ -30,14 +30,18 @@ client.controller 'MainCtrl', ($scope, $http) ->
 			$http.get('/resources/'+productName+'/'+resourceName+'/'+feature).success (resp) =>
 				resp = [ { name: 'No results' } ] if resp.length == 0
 				$scope.palettes[productName].resources[resourceName].models = resp
+
+				$scope.palettes[productName].resources[resourceName].showModels = !$scope.palettes[productName].resources[resourceName].showModel
 		else
 			console.log('feature:', feature);
 			console.log 'meta', $scope.palettes[productName].resources[resourceName]
 			$scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show = !$scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show
+
 	#$scope.resourceSubmit = () =>
 	#	$http.post('/'+productName+'/'+resourceName+'/'+feature, data).success (resp) =>
 	#		resp = [ { name: 'No results' } ] if resp.length == 0
 	#		$scope.palettes[productName].resources[resourceName].models = resp
+
 	$scope.formSubmit = (formData) =>
 		formData.show = !formData.show
 		reqData = {
@@ -46,6 +50,7 @@ client.controller 'MainCtrl', ($scope, $http) ->
 			imageRef: formData.image.id
 		}
 		console.log reqData
+		# productName, resourceName, Modelaction
 		$http.post('/resources/cloudServersOpenStack/servers/new', reqData).success (resp) =>
 			 console.log resp
 	$scope.serverFormCheck = (productName) =>

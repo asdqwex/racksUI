@@ -57,7 +57,8 @@
               }
             ];
           }
-          return $scope.palettes[productName].resources[resourceName].models = resp;
+          $scope.palettes[productName].resources[resourceName].models = resp;
+          return $scope.palettes[productName].resources[resourceName].showModels = !$scope.palettes[productName].resources[resourceName].showModel;
         });
       } else {
         console.log('feature:', feature);
