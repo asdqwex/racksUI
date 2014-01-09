@@ -14,6 +14,7 @@
     $scope.flavors = {};
     $scope.images = {};
     $scope.actions = {};
+    $scope.prettyPalettes = "";
     $scope.getAccount = function(user) {
       var _this = this;
       $scope.toggle = !$scope.toggle;
@@ -86,7 +87,7 @@
         return false;
       }
     };
-    return $scope.modelAction = function(productName, resourceName, Modelaction, model) {
+    $scope.modelAction = function(productName, resourceName, Modelaction, model) {
       var data;
       model.action = {};
       model.action.show = !model.action.show;
@@ -100,6 +101,9 @@
         model.action.output = angular.toJson(resp, true);
         return console.log('model', model.action.output);
       });
+    };
+    return $scope.prettyify = function() {
+      return $scope.prettyPalettes = angular.toJson($scope.palettes, true);
     };
   });
 

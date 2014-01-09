@@ -30,7 +30,7 @@
       return new racksjs({
         username: process.argv[2],
         apiKey: process.argv[3],
-        verbosity: 0,
+        verbosity: 5,
         cache: false
       }, function(newRack) {
         if (rack.error) {

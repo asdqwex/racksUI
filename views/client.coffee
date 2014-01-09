@@ -8,6 +8,7 @@ client.controller 'MainCtrl', ($scope, $http) ->
 	$scope.flavors = {}
 	$scope.images = {}
 	$scope.actions = {}
+	$scope.prettyPalettes = ""
 	$scope.getAccount = (user) ->
 		$scope.toggle = !$scope.toggle
 		$http.post('/getAccount', user).success (resp) =>
@@ -70,6 +71,12 @@ client.controller 'MainCtrl', ($scope, $http) ->
 		$http.post('/actions/'+model.id+'/'+Modelaction, data).success (resp) =>
 			model.action.output = angular.toJson(resp, true)
 			console.log 'model', model.action.output
+
+	$scope.prettyify = () =>
+		$scope.prettyPalettes = angular.toJson($scope.palettes, true)
+
+
+
 
 
 

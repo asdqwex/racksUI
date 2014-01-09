@@ -79,7 +79,7 @@
 							</div>
 							<div class="action white" ng-show="resource.showModels">
 								<button ng-click="resource.showModels = !resource.showModels" class="btn btn-xs">Close</button>
-								<h4>Models</h4>
+								<h4>{{resourceName}}</h4>
 								<div ng-repeat="model in resource.models">
 									<span>{{model.name || model.id}}</span><br>
 									<select ng-model="selectedAction">
@@ -96,6 +96,10 @@
 					</div>
 				</div>
 			</div>
+		</div>
+		<div>
+			<button ng-click="prettyify()">Show me the palettes</button>
+			<pre>{{prettyPalettes}}</pre>
 		</div>
 	</body>
 </html>
