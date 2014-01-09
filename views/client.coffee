@@ -1,5 +1,5 @@
 client = angular.module('client', [])
- 
+
 client.controller 'MainCtrl', ($scope, $http) ->
 	$scope.palettes = {}
 	$scope.request = {}
@@ -42,8 +42,8 @@ client.controller 'MainCtrl', ($scope, $http) ->
 		formData.show = !formData.show
 		reqData = {
 			name: formData.name
-			flavor: formData.flavor.id
-			image: formData.image.id
+			flavorRef: formData.flavor.id
+			imageRef: formData.image.id
 		}
 		console.log reqData
 		$http.post('/resources/cloudServersOpenStack/servers/new', reqData).success (resp) =>
@@ -57,14 +57,17 @@ client.controller 'MainCtrl', ($scope, $http) ->
 		model.action = {}
 		model.action.show = !model.action.show
 		data = {
-			product: productName
-			resource: resourceName
-			id: model.id,
-			action: Modelaction
+				product: productName
+				resource: resourceName
+				id: model.id,
+				action: Modelaction
 		}
 		$http.post('/actions/'+model.id+'/'+Modelaction, data).success (resp) =>
-			model.action.output = resp
+			model.action.output = angular.toJson(resp, true)
+			console.log 'model', model.action.output
 
-			
+
+
+		
 
 		

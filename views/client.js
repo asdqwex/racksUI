@@ -70,8 +70,8 @@
       formData.show = !formData.show;
       reqData = {
         name: formData.name,
-        flavor: formData.flavor.id,
-        image: formData.image.id
+        flavorRef: formData.flavor.id,
+        imageRef: formData.image.id
       };
       console.log(reqData);
       return $http.post('/resources/cloudServersOpenStack/servers/new', reqData).success(function(resp) {
@@ -96,7 +96,8 @@
         action: Modelaction
       };
       return $http.post('/actions/' + model.id + '/' + Modelaction, data).success(function(resp) {
-        return model.action.output = resp;
+        model.action.output = angular.toJson(resp, true);
+        return console.log('model', model.action.output);
       });
     };
   });

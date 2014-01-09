@@ -80,12 +80,13 @@
 							<div ng-repeat="model in resource.models">
 								<span>{{model.name || model.id}}</span>
 								<div class="action white" ng-show="model.action.show">
-									<code ng-repeat="(key, value) in model.action.output">{{key}} : {{value}}<br></code>
+									<pre>{{model.action.output}}</pre>
 									<button ng-click="model.action.show = !model.action.show" type="submit" class="btn btn-default">Cancel</button>
 								</div>
-								<select>
-									<option ng-repeat="action in resource.modelFeatures | filter: '!delete'| filter: '!metadata'" ng-click="modelAction(productName, resourceName, action, model)">{{action}}</option>
+								<select ng-model="selectedAction">
+									<option ng-repeat="action in resource.modelFeatures | filter: '!metadata'">{{action}}</option>
 								</select>
+								<button ng-click="modelAction(productName, resourceName, selectedAction, model)">Submit</button>
 							</div>
 						</div>
 					</div>
