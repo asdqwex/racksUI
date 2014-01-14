@@ -102,8 +102,16 @@
         return console.log('model', model.action.output);
       });
     };
-    return $scope.prettyify = function() {
+    $scope.prettyify = function() {
       return $scope.prettyPalettes = angular.toJson($scope.palettes, true);
+    };
+    return $scope.featureFilter = function(items) {
+      var result;
+      result = [];
+      angular.forEach(items, function(value, key) {
+        return result.push(key);
+      });
+      return result;
     };
   });
 

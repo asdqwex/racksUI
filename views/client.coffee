@@ -31,7 +31,6 @@ client.controller 'MainCtrl', ($scope, $http) ->
 			$http.get('/resources/'+productName+'/'+resourceName+'/'+feature).success (resp) =>
 				resp = [ { name: 'No results' } ] if resp.length == 0
 				$scope.palettes[productName].resources[resourceName].models = resp
-
 				$scope.palettes[productName].resources[resourceName].showModels = !$scope.palettes[productName].resources[resourceName].showModel
 		else
 			console.log('feature:', feature);
@@ -74,6 +73,13 @@ client.controller 'MainCtrl', ($scope, $http) ->
 
 	$scope.prettyify = () =>
 		$scope.prettyPalettes = angular.toJson($scope.palettes, true)
+
+	$scope.featureFilter = (items) =>
+    result = []
+    angular.forEach items, (value, key) =>
+    	result.push(key)
+    return result
+
 
 
 

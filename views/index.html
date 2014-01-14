@@ -31,7 +31,7 @@
 						<div class="resource" ng-repeat="(resourceName, resource) in product.resources" ng-init="resource.showModels=0">
 							<div class="resourceHeader">
 								<div class="resourceName">{{resourceName}}:</div>
-								<div class="rightAlign"><button ng-repeat="(featureName, feature) in resource.resourceFeatures | orderBy:featureName:!reverse" class="btn btn-default btn-xs" ng-click="resourceClick(productName,resourceName, featureName, {})">{{featureName}}</button></div>
+								<div class="rightAlign"><button ng-repeat="featureName in featureFilter(resource.resourceFeatures) | orderBy:featureName:!reverse | filter: '!model' | filter: '!_racksmeta' | filter: '!assume'" class="btn btn-default btn-xs" ng-click="resourceClick(productName,resourceName, featureName, {})">{{featureName}}</button></div>
 								<div class="btn-group resourceFeatures">
 									<div ng-repeat="(featureName, feature) in resource.resourceFeatures">
 										<div class="featureFormContainer" ng-show="feature.show" >

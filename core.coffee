@@ -63,18 +63,18 @@ webserver.post '/getAccount', (req, res) =>
 					else
 						modelFeatures = Object.keys(rack[productName][resourceName].model({}))
 					resourceFeatures = {}
-					filteredResourceFeatures = ['assume', '_racksmeta', 'model']
+					#filteredResourceFeatures = ['assume', '_racksmeta', 'model']
 					for featureName, feature of rack[productName][resourceName]
-						if featureName in filteredResourceFeatures
-							#console.log 'feature filtered:', featureName
-						else
-							featureObject = {}
-							featureObject = {
-								show: 0
-								details: feature
-								request: {}
-							}
-							resourceFeatures[featureName] = featureObject
+						#if featureName in filteredResourceFeatures
+						#	#console.log 'feature filtered:', featureName
+						#else
+						featureObject = {}
+						featureObject = {
+							show: 0
+							details: feature
+							request: {}
+						}
+						resourceFeatures[featureName] = featureObject
 					#console.log resourceFeatures
 					products[productName].resources[resourceName] = 
 						modelFeatures: modelFeatures
