@@ -31,35 +31,23 @@
 						<div class="resource" ng-repeat="(resourceName, resource) in product.resources" ng-init="resource.showModels=0">
 							<div class="resourceHeader">
 								<div class="resourceName">{{resourceName}}:</div>
-								<div class="rightAlign"><button ng-repeat="featureName in featureFilter(resource.resourceFeatures) | orderBy:featureName:!reverse | filter: '!model' | filter: '!_racksmeta' | filter: '!assume'" class="btn btn-default btn-xs" ng-click="resourceClick(productName,resourceName, featureName, {})">{{featureName}}</button></div>
+								<div class="rightAlign">
+									<button ng-repeat="featureName in featureFilter(resource.resourceFeatures) | orderBy:featureName:!reverse | filter: '!model' | filter: '!_racksmeta' | filter: '!assume'" class="btn btn-default btn-xs" ng-click="resourceClick(productName,resourceName, featureName, {})">{{featureName}}</button>
+								</div>
 								<div class="btn-group resourceFeatures">
 									<div ng-repeat="(featureName, feature) in resource.resourceFeatures">
 										<div class="featureFormContainer" ng-show="feature.show" >
-											<main ng-if="serverFormCheck(productName)" ng-switch on="featureName">	
-												<form class="simple-form" ng-switch-when="new">
+											<main>
+												<form class="simple-form">
 													<table class="white">
-														<tr>
+														<tr ng-repeat="(fieldName, fieldType) in resource.resourceFeatures._racksmeta.details.requiredFields">
 															<td>
-																Name:
+																{{fieldName}}
 															</td>
-															<td>
-																<input type="text" ng-model="formData.name">
-															</td>
-														</tr>
-														<tr>
-															<td>
-																Flavor:
-															</td>
-															<td>
-																<select ng-model="formData.flavor" ng-options="flavor.name for flavor in flavors"></select>
-															</td>
-														</tr>
-														<tr>
-															<td>
-																Image:
-															</td>
-															<td>
-																<select ng-model="formData.image" ng-options="image.name for image in images"></select>
+															<td ng-switch on="fieldType">
+																<input ng-switch-when="string" type="text" ng-model="formData.name">
+																<select ng-switch-when="imageRef" ng-model="images" ng-options="image.name for image in images">{{name}}</select>
+																<select ng-switch-when="flavorRef" ng-model="flavors" ng-options="flavor.name for flavor in flavors"></select>
 															</td>
 														</tr>
 														<tr>

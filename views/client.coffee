@@ -33,8 +33,8 @@ client.controller 'MainCtrl', ($scope, $http) ->
 				$scope.palettes[productName].resources[resourceName].models = resp
 				$scope.palettes[productName].resources[resourceName].showModels = !$scope.palettes[productName].resources[resourceName].showModel
 		else
-			console.log('feature:', feature);
-			console.log 'meta', $scope.palettes[productName].resources[resourceName]
+			#console.log('feature:', feature);
+			#console.log 'meta', $scope.palettes[productName].resources[resourceName]
 			$scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show = !$scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show
 
 	#$scope.resourceSubmit = () =>

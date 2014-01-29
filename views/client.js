@@ -62,8 +62,6 @@
           return $scope.palettes[productName].resources[resourceName].showModels = !$scope.palettes[productName].resources[resourceName].showModel;
         });
       } else {
-        console.log('feature:', feature);
-        console.log('meta', $scope.palettes[productName].resources[resourceName]);
         return $scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show = !$scope.palettes[productName].resources[resourceName].resourceFeatures[feature].show;
       }
     };
